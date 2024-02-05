@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main{
+public class Main {
     static int L; // 체스판크기
     static int N; // 기사의 수
     static int Q; // 명령의 수
@@ -79,7 +79,7 @@ public class Main{
         Arrays.fill(board[L+1], WALL);
         for (int i = 0; i < L+2; i++) {
             board[i][0] = WALL;
-            board[i][L+1] =WALL;
+            board[i][L+1] = WALL;
         }
         knights = new Knight[N+1];
         //기사 입력
@@ -94,6 +94,7 @@ public class Main{
             knights[i] = new Knight(r, r+h, c, c+w, k, 0);
         }
 
+
         for (int i = 1; i < N+1; i++) {
             if(!knights[i].isDie){
                 Knight k = knights[i];
@@ -104,17 +105,30 @@ public class Main{
                 }
             }
         }
-//        System.out.println();
-//        printBoard();
-
 
         // 명령 수행
         for (int q = 0; q < Q; q++) {
             st = new StringTokenizer(br.readLine());
 
 //            System.out.println("\n-------- " +q+"번째 명령 ---------");
+
             int idx = Integer.parseInt(st.nextToken());
             int d = Integer.parseInt(st.nextToken());
+//            System.out.print(idx +"번 기사를 ");
+//            if(d == 0 ){
+//                System.out.println("위쪽 ");
+//            }
+//            if(d == 1 ){
+//                System.out.println("오른쪽 ");
+//            }
+//            if(d == 2 ){
+//                System.out.println("아래쪽 ");
+//            }
+//
+//            if(d == 3 ){
+//                System.out.println("왼쪽 ");
+//            }
+//            System.out.println("방향으로 이동");
             if(knights[idx].isDie) continue;
 
 
@@ -158,12 +172,12 @@ public class Main{
                 //pitfallBoard도 같이 확인하여 true 이면 데미지 올리기
                 if(knight!= idx && pitfallBoard[i][j]){ // 함정이 있는데
 //                    System.out.println(idx +"번 이동하다가 "+ i+", "+j+"번에 함정!");
-//                    System.out.println(top+", " + bottom+", "+left+", " + right);
+//                    System.out.println(top+", " /**/+ bottom+", "+left+", " + right);
                     // 밀쳐진 위치인 경우
-                    if(k.top > i || i >= k.bottom || k.left > j || k.right <= j) {
+//                    if(k.top > i || i >= k.bottom || k.left > j || k.right <= j) {
                         // 추가 데미지 증가
                         damageCnt++;
-                    }
+//                    }
                 }
                 if(board[i][j] > 0 && board[i][j] != idx){
                     // 이동해야할 위치가 0보다 크고 본인의 idx가 아닌경우 -> 다른 기사
@@ -257,6 +271,8 @@ public class Main{
                     // 이동해야할 위치가 0보다 크고 본인의 idx가 아닌경우 -> 다른 기사
                     // 연쇄적으로 밀기
                     // 그 기사의 checkMove 실행
+//                    System.out.println("****"+board[i][j]+"번 기사 만남");
+//                    System.out.println(i + ", "+j);
                     checkMove(board[i][j], d);
                 }
             }
@@ -270,10 +286,18 @@ public class Main{
 
 
     private static void printBoard() {
+//        System.out.println("-------------print-------------");
         for (int i = 0; i < L+2; i++) {
-            System.out.println(Arrays.toString(board[i]));
+            for (int j = 0; j < L+2; j++) {
+                if(board[i][j] != -1){
+                    System.out.print("0");
+                }
+                System.out.print(board[i][j]+" ");
+            }
+            System.out.println();
 
         }
+        System.out.println("---------------------------------");
     }
 
     private static void printKnights() {
