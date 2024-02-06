@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main{
     static int L; // 체스판크기
     static int N; // 기사의 수
     static int Q; // 명령의 수
@@ -192,7 +192,11 @@ public class Main {
         k.damage += damageCnt;
         if(k.damage  >= k.hp ){
             k.isDie = true;
-            coloring(idx, d, 0);
+            for (int i = k.top; i < k.bottom ; i++) {
+                for (int j = k.left; j < k.right ; j++) {
+                    board[i][j] = 0;
+                }
+            }
         }else{
             // 진짜 이동시 보드 색칠
             coloring(idx, d, idx);
